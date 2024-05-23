@@ -1,27 +1,109 @@
-# LeafletAngularExample
+# Map Example without a Service
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.3.
+1. Create Angular app with `ng new leaflet-angular-example`
+2. Install Leaflet with `npm install leaflet`
+3. Install typings for Leaflet with `npm install --save-dev @types/leaflet`
+4. Create a component with `ng g component map`
+5. Update `app.component.html`
 
-## Development server
+```html
+<main>
+  <router-outlet></router-outlet>  
+</main>
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+6. Update `app.routes.ts`
 
-## Code scaffolding
+```typescript
+import { Routes } from '@angular/router';
+import { MapComponent } from './map/map.component';
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+export const routes: Routes = [
+    { path: 'map', component: MapComponent },
+    { path: '', redirectTo: '/map', pathMatch: 'full' },
+];
+```
 
-## Build
+7. Update `styles.scss`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```scss
+body {
+    height: 100vh;
+    width: 100wh;
+    margin: 0;
+}
+```
 
-## Running unit tests
+8. Update `angular.json` by adding `node_modules/leaflet/dist/leaflet.css` to `styles`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```json
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "leaflet-angular-example": {
+      // ...
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            // ...
+            "styles": [
+              "src/styles.scss",
+              "node_modules/leaflet/dist/leaflet.css"  // <-- add this line
+            ],
+            // ...
+```
 
-## Running end-to-end tests
+9. Update `map.component.html`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```html
+<div id="map" #map>
+</div>
+```
 
-## Further help
+10. Update `map.component.scss`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```scss
+#map {
+    height: 100vh;
+    width: 100vw;
+}
+```
+
+11. Update `map.component.ts`
+
+```typescript
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { Map, map, tileLayer } from 'leaflet';
+
+@Component({
+  selector: 'app-map',
+  standalone: true,
+  imports: [],
+  templateUrl: './map.component.html',
+  styleUrl: './map.component.scss'
+})
+export class MapComponent implements AfterViewInit {
+
+  @ViewChild('map')
+  mapElementRef: ElementRef = null!;
+
+  public map: Map = null!;
+
+  ngAfterViewInit(): void {
+
+    this.map = map(this.mapElementRef.nativeElement)
+        .setView([46.801111, 8.226667], 8);
+
+    tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        // add a link to OpenStreetMap (omitted here for shorter line width)
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(this.map);
+
+  }
+
+}
+```
