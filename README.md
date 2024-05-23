@@ -1,4 +1,4 @@
-# Map Example without a Service
+# Map Example
 
 1. Create Angular app with `ng new leaflet-angular-example`
 2. Install Leaflet with `npm install leaflet`
