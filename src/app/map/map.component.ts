@@ -22,8 +22,7 @@ export class MapComponent implements AfterViewInit {
 
     tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        // add a link to OpenStreetMap (omitted here for shorter line width)
-        attribution: '&copy; OpenStreetMap'
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(this.map);
 
   }
