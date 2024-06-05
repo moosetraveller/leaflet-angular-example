@@ -2,23 +2,31 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Map, map, tileLayer } from 'leaflet';
 
 @Component({
-  selector: 'app-map',
+  selector: 'app-map-basic',
   standalone: true,
   imports: [],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.scss'
+  template: '<div id="map" #map></div>',
+  styles: `
+    #map {
+      height: calc(100vh - var(--header-height));
+      width: 100vw;
+    }
+  `,
 })
-export class MapComponent implements AfterViewInit {
+export class MapSimpleComponent implements AfterViewInit {
 
   @ViewChild('map')
   mapElementRef: ElementRef = null!;
 
-  public map: Map = null!;
+  map: Map = null!;
 
   ngAfterViewInit(): void {
 
     this.map = map(this.mapElementRef.nativeElement)
-        .setView([46.801111, 8.226667], 8);
+      .setView([46.801111, 8.226667], 8);
+
+    this.map.attributionControl
+      .setPrefix('<a href="https://leafletjs.com/">Leaflet</a>');
 
     tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,

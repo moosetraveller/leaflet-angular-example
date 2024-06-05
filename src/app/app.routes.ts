@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { MapComponent } from './map/map.component';
+import { MapSimpleComponent } from './map-simple/map-simple.component';
 import { MapLegendComponent } from './map-legend/map-legend.component';
 
 export const routes: Routes = [
-    { path: 'map', component: MapComponent },
+    { path: 'map-simple', component: MapSimpleComponent },
     { path: 'map-legend', component: MapLegendComponent },
-    { path: '', redirectTo: '/map', pathMatch: 'full' },
+    { path: '**', redirectTo: '/map-simple', pathMatch: 'full' },
 ];

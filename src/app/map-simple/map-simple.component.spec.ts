@@ -1,24 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MapLegendComponent } from './map-legend.component';
+import { MapSimpleComponent } from './map-simple.component';
 import { Layer } from 'leaflet';
 
-describe('MapLegendComponent', () => {
+describe('MapSimpleComponent', () => {
 
-  let component: MapLegendComponent;
-  let fixture: ComponentFixture<MapLegendComponent>;
+  let component: MapSimpleComponent;
+  let fixture: ComponentFixture<MapSimpleComponent>;
 
   beforeEach(async () => {
-
     await TestBed.configureTestingModule({
-      imports: [MapLegendComponent]
+      imports: [MapSimpleComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(MapLegendComponent);
+    fixture = TestBed.createComponent(MapSimpleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-
   });
 
   it('should create', () => {
@@ -27,7 +25,7 @@ describe('MapLegendComponent', () => {
 
   it('map is not null', () => {
     expect(component.map).toBeDefined();
-  }); 
+  });
 
   it('map attribution has no flag', () => {
     
@@ -39,13 +37,13 @@ describe('MapLegendComponent', () => {
 
   });
 
-  it('map has Swisstopo layer', () => {
+  it('map has OSM layer', () => {
 
     const map = component.map;
     const layers: Array<Layer> = [];
     map.eachLayer(layer => layers.push(layer));
     expect(layers.length).toBe(1);
-    expect(layers[0]?.getAttribution?.()).toContain('swisstopo.admin.ch');
+    expect(layers[0]?.getAttribution?.()).toContain('openstreetmap.org');
 
   });
 

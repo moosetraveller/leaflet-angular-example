@@ -1,24 +1,36 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { Map, control, map, tileLayer } from 'leaflet';
+import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
+import { Bounds, LatLngBounds, Map, control, map, tileLayer } from 'leaflet';
+import { MapStateService } from '../map-state.service';
+import { first, last } from 'rxjs';
 
 @Component({
   selector: 'app-map',
   standalone: true,
   imports: [],
-  templateUrl: './map-legend.component.html',
-  styleUrl: './map-legend.component.scss'
+  template: '<div id="map" #map></div>',
+  styles: `
+    #map {
+      height: calc(100vh - var(--header-height));
+      width: 100vw;
+    }
+  `,
 })
 export class MapLegendComponent implements AfterViewInit {
 
   @ViewChild('map')
   mapElementRef: ElementRef = null!;
 
-  public map: Map = null!;
+  map: Map = null!;
+
+  private _mapStateService = inject(MapStateService);
 
   ngAfterViewInit(): void {
 
     this.map = map(this.mapElementRef.nativeElement)
-        .setView([46.801111, 8.226667], 9);
+      .setView([46.801111, 8.226667], 8);
+
+    this.map.attributionControl
+      .setPrefix('<a href="https://leafletjs.com/">Leaflet</a>');
 
     const osm = tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,

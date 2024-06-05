@@ -1,9 +1,9 @@
-# Map Example
+# Map Example (Angular 17)
 
 1. Create Angular app with `ng new leaflet-angular-example`
 2. Install Leaflet with `npm install leaflet`
 3. Install typings for Leaflet with `npm install --save-dev @types/leaflet`
-4. Create a component with `ng g component map`
+4. Create a component with `ng g component map-simple`
 5. Update `app.component.html`
 
 ```html
@@ -16,11 +16,11 @@
 
 ```typescript
 import { Routes } from '@angular/router';
-import { MapComponent } from './map/map.component';
+import { MapSimpleComponent } from './map/map-simple.component';
 
 export const routes: Routes = [
-    { path: 'map', component: MapComponent },
-    { path: '', redirectTo: '/map', pathMatch: 'full' },
+    { path: 'map-simple', component: MapSimpleComponent },
+    { path: '**', redirectTo: '/map', pathMatch: 'full' },
 ];
 ```
 
@@ -56,36 +56,25 @@ body {
             // ...
 ```
 
-9. Update `map.component.html`
-
-```html
-<div id="map" #map>
-</div>
-```
-
-10. Update `map.component.scss`
-
-```scss
-#map {
-    height: 100vh;
-    width: 100vw;
-}
-```
-
-11. Update `map.component.ts`
+9. Update `map-simple.component.ts`
 
 ```typescript
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Map, map, tileLayer } from 'leaflet';
 
 @Component({
-  selector: 'app-map',
+  selector: 'app-map-simple',
   standalone: true,
   imports: [],
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.scss'
+  template: '<div id="map" #map></div>',
+  styles: `
+    #map {
+        height: 100vh;
+        width: 100vw;
+    }
+  `
 })
-export class MapComponent implements AfterViewInit {
+export class MapSimpleComponent implements AfterViewInit {
 
   @ViewChild('map')
   mapElementRef: ElementRef = null!;

@@ -1,3 +1,19 @@
+<header>
+  
+  <div id="title">
+    <div id="appTitle">Leaflet Examples</div>
+  </div>
+
+  <select [value]="currentRoute" (change)="navigate()" #navigator>
+    @for(route of routes; track $index) {
+      @if (route.path && route.path != '**') {
+        <option [value]="'/' + route.path">{{ '/' + route.path }}</option>
+      }
+    }
+  </select>
+
+</header>
+
 <main>
   <router-outlet></router-outlet>  
 </main>
