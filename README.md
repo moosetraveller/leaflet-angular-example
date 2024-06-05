@@ -1,4 +1,4 @@
-# Map Example (Angular 17)
+# Map Example (Angular 17 and 18)
 
 1. Create Angular app with `ng new leaflet-angular-example`
 2. Install Leaflet with `npm install leaflet`
