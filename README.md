@@ -36,7 +36,7 @@ body {
 
 8. Update `angular.json` by adding `node_modules/leaflet/dist/leaflet.css` to `styles`
 
-```json
+```
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
