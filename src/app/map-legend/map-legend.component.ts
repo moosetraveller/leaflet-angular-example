@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, ViewChild, inject } from '@angular/core';
-import { Bounds, LatLngBounds, Map, control, map, tileLayer } from 'leaflet';
+import { Map, control, map, tileLayer } from 'leaflet';
 import { MapStateService } from '../map-state.service';
-import { first, last } from 'rxjs';
 
 @Component({
   selector: 'app-map',

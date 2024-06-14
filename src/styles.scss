@@ -14,4 +14,28 @@ body {
 
 :root {
     --header-height: 51px;
+    --map-marker-color: #424874; /* default color */
+}
+  
+.map-marker {
+    background-color: var(--map-marker-color);
+    width: 1.5rem;
+    height: 1.5rem;
+    display: block;
+    left: -0.75rem;
+    top: -0.75rem;
+    position: relative;
+    border-radius: 3rem 3rem 0;
+    transform: rotate(45deg);
+    border: 1px solid #FFFFFF;
+}
+
+.map-popup-link {
+    cursor: pointer;
+    color: #0078A8;
+    border-bottom: 2px solid transparent;
+}
+
+.map-popup-link:hover {
+    border-bottom: 2px solid #0078A8;
 }
