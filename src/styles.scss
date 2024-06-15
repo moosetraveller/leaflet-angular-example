@@ -14,10 +14,10 @@ body {
 
 :root {
     --header-height: 51px;
-    --map-marker-color: #424874; /* default color */
 }
   
 .map-marker {
+    --map-marker-color: #424874; /* default color */
     background-color: var(--map-marker-color);
     width: 1.5rem;
     height: 1.5rem;

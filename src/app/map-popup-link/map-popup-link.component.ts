@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import * as L from 'leaflet';
 
 import { GeoJSON } from 'geojson';
+import { PinIcon, createPinIconHtml, pinIcon } from '../leaflet.extension';
 
 const AIRPORTS: GeoJSON =  
 {
@@ -125,15 +126,18 @@ export class MapPopupLinkComponent {
 
     L.geoJSON(AIRPORTS, {
       pointToLayer: (_, point) => {
-        return L.marker(point, {
-          icon: L.divIcon({
-            className: "marker-container",
-            iconAnchor: [0, 24],
-            popupAnchor: [0, -36],
-            // https://stackoverflow.com/a/78349638/42659 
-            html: '<span class="map-marker" style="--map-marker-color: #cd5b45;" />'
+        const marker = L.marker(point, {
+          icon: pinIcon({
+            color: '#cd5b45',
           })
-        })
+        });
+        marker.on('click', () => {
+          const icon = marker.getIcon() as PinIcon;
+          const randomColor = `#${Math.random().toString(16).slice(-6)}`;
+          const iconElement = marker.getElement();
+          iconElement!.innerHTML = createPinIconHtml(randomColor);
+        });
+        return marker;
       }
     }).addTo(this.map);
     
