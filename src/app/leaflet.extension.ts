@@ -17,10 +17,11 @@ function updateLeafletDefaultMarkerIcons() {
 }
 
 export interface PinIconOptions extends L.DivIconOptions {
-    color: string;
+    color?: string;
 }
 
 export interface PinIcon extends L.DivIcon {
+    options: PinIconOptions;
     getColor(): string;
 }
 
@@ -38,22 +39,71 @@ const PinIcon = L.DivIcon.extend({
     },
 
     initialize: function(options?: PinIconOptions) {
-        (L.DivIcon as any).prototype.initialize.call(this, options);
-        this._setColor(options?.color || '#424874');
-    },
 
-    _setColor(color: string) {
-        this._color = color;
-        this.options.html = createPinIconHtml(color);
+        options = options || {};
+        options.color = options.color || '#424874';
+        options.html = createPinIconHtml(options.color);
+
+        (L.DivIcon as any).prototype.initialize.call(this, options);
+        
     },
 
     getColor(): string {
-        return this._color;
+        return this.options.color;
     },
 
 });
 
 export function pinIcon(options?: PinIconOptions): PinIcon {
     return new (PinIcon as any)(options) as PinIcon;
+}
+
+export interface PinIconMarkerOptions extends L.MarkerOptions {
+    color?: string;
+}
+
+export interface PinIconMarker extends L.Marker {
+    options: PinIconMarkerOptions;
+    getColor(): string;
+    setColor(color: string): void;
+    setRandomColor(): void;
+}
+
+const PinIconMarker = L.Marker.extend({ 
+
+    initialize: function(latlng: L.LatLngExpression, options?: PinIconMarkerOptions) {
+
+        options = options || {};
+        options.icon = pinIcon({ color: options.color });
+
+        (L.Marker as any).prototype.initialize.call(this, latlng, options);
+
+    },
+
+    setRandomColor() {
+        this.setColor(`#${Math.random().toString(16).slice(-6)}`);
+    },
+
+    setColor(color: string) {
+
+        this.options.color = color;
+
+        const icon = this.getIcon() as PinIcon;
+        icon.options.color = color;
+        icon.options.html = createPinIconHtml(color);
+        
+        const iconElement = this.getElement();
+        iconElement!.innerHTML = icon.options.html;
+
+    },
+
+    getColor(): string {
+        return (this.getIcon() as PinIcon).getColor();
+    },
+
+});
+
+export function pinIconMarker(latlng: L.LatLngExpression, options?: PinIconMarkerOptions): PinIconMarker {
+    return new (PinIconMarker as any)(latlng, options) as PinIconMarker;
 }
 
