@@ -50,10 +50,15 @@ jobs:
         # https://stackoverflow.com/questions/78544888/angular-18-ng-build-without-browser-folder
         run: npm run build -- --base-href=/${{ env.REPO_NAME }}/ --configuration github-page
 
-      # - name: Check build
-      #   run: |
-      #     pwd
-      #     ls -la
+      - name: Override 404.html
+        # https://v17.angular.io/guide/deployment#deploy-to-github-pages
+        run: cp ./_site/index.html ./_site/404.html
+
+      - name: Check build
+        run: |
+          pwd
+          ls -la
+          ls -la _site/
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
