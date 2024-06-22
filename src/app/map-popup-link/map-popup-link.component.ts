@@ -83,7 +83,7 @@ export class MapPopupLinkComponent {
 
     // simple marker
     
-    let marker = L.marker([47.374444, 8.541111]).addTo(this.map);
+    let marker = pinIconMarker([47.374444, 8.541111]).addTo(this.map);
 
     const popupTemplate = document.createElement('template')
     popupTemplate.innerHTML = `
