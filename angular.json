@@ -60,6 +60,12 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "github-page": {
+              "outputPath": {
+                "base": "./_site",
+                "browser": ""
+              }
             }
           },
           "defaultConfiguration": "production"
